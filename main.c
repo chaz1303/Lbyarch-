@@ -14,8 +14,8 @@
 
 extern void dot_product_asm(int n, double* A, double* B, double* sdot);
 
-/* noinline so the compiler can't fold repeated calls in release mode */
-__declspec(noinline)
+
+__declspec(noinline)    //noinline so the compiler can't fold repeated calls in release mode
 void dot_product_c(int n, double* A, double* B, double* sdot) {
     double sum = 0.0;
     for (int i = 0; i < n; i++) {
@@ -25,8 +25,7 @@ void dot_product_c(int n, double* A, double* B, double* sdot) {
 }
 
 int main() {
-    /* Spec: 2^20, 2^24, 2^30. If 2^30 can't be allocated, fall back to 2^29 then 2^28 */
-    int exponents[] = { 20, 24, 30 };
+    int exponents[] = { 20, 24, 30 };    //spec says 2^20, 2^24, 2^30. If 2^30 can't be allocated, fall back to 2^29 then 2^28
     int num_sizes = sizeof(exponents) / sizeof(exponents[0]);
     const int MIN_EXP_FALLBACK = 28;
 
