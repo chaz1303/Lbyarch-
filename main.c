@@ -6,6 +6,8 @@
 
 #define NUM_RUNS 20
 
+extern void dot_product_asm(int n, double* A, double* B, double* sdot);
+
 void dot_product_c(int n, double* A, double* B, double* sdot) {
     double sum = 0.0;
     for (int i = 0; i < n; i++) {
@@ -47,7 +49,9 @@ int main() {
         }
 
         double sdot_c = 0.0;
+        double sdot_asm = 0.0;
         double total_time_c = 0.0;
+        double total_time_asm = 0.0;
 
         for (int r = 0; r < NUM_RUNS; r++) {
             QueryPerformanceCounter(&start);
@@ -57,7 +61,24 @@ int main() {
         }
         double avg_time_c = total_time_c / NUM_RUNS;
 
-        printf("[C Kernel] sdot = %.6f | Avg Time (%d runs): %.4f ms\n\n", sdot_c, NUM_RUNS, avg_time_c);
+        for (int r = 0; r < NUM_RUNS; r++) {
+            QueryPerformanceCounter(&start);
+            dot_product_asm(n, A, B, &sdot_asm);
+            QueryPerformanceCounter(&end);
+            total_time_asm += (double)(end.QuadPart - start.QuadPart) * 1000.0 / frequency.QuadPart;
+        }
+        double avg_time_asm = total_time_asm / NUM_RUNS;
+
+        printf("[C Kernel]      sdot = %.6f | Avg Time (%d runs): %.4f ms\n", sdot_c, NUM_RUNS, avg_time_c);
+        printf("[x86-64 Kernel] sdot = %.6f | Avg Time (%d runs): %.4f ms\n", sdot_asm, NUM_RUNS, avg_time_asm);
+
+        double diff = fabs(sdot_c - sdot_asm);
+        double tolerance = 1e-5 * fabs(sdot_c);
+        if (diff <= tolerance) {
+            printf("Sanity Check:   PASSED (x86-64 kernel output is correct)\n\n");
+        } else {
+            printf("Sanity Check:   FAILED (Difference: %.10f)\n\n", diff);
+        }
 
         free(A);
         free(B);
