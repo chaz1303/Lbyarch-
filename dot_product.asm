@@ -1,4 +1,3 @@
-%include "io64.inc"
 section .text
 global dot_product_asm
 
