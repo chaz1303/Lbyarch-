@@ -47,5 +47,5 @@ The x86-64 kernel's sdot matched the C kernel's in every run (PASSED). The value
 ### Release Mode Output
 ![Release Output](screenshots/release_output.png)
 
-## 4. Video Demonstration
+## 6. Video Demonstration
 [Watch the 5–10 minute source code, compilation, and execution walkthrough](https:// )
