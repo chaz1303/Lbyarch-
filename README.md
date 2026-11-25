@@ -9,7 +9,7 @@ x86-64 NASM kernel (dot_product_asm), using scalar SIMD registers and scalar SIM
 
 
 ## 1. How to Build and Run
-** Command line:**
+**Command line:**
 ```
 nasm -f win64 dot_product.asm -o dot_product.obj
 gcc -O0 -g main.c dot_product.obj -o program_debug.exe
