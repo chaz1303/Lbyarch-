@@ -39,7 +39,7 @@ gcc -O2    main.c dot_product.obj -o program_release.exe
 * **Correctness Verification:** In both Debug and Release builds, the `sdot` values computed by the x86-64 scalar SIMD assembly kernel (`movsd`, `mulsd`, `addsd`) match the C reference kernel across all vector sizes (`262115.690721` at $2^{20}$, `4194151.944268` at $2^{24}$, and `67111981.284301` at $2^{28}$ in Debug; `262012.772169`, `4194995.293972`, and `67112540.885605` in Release).
 
 ## 5. Program Output & Correctness Check
-The x86-64 kernel's sdot matched the C kernel's in every run (PASSED). The values differ between the Debug and Release builds only because the random data is regenerated on each program launch; the check is C vs. x86-64 within the same run.
+The x86-64 kernel's sdot matched the C kernel's in every run (PASSED). The values differ between the Debug and Release builds only because the random data is regenerated on each program launch.
 
 ### Debug Mode Output
 ![Debug Output](screenshots/debug_output.png)
